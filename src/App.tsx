@@ -32,6 +32,7 @@ export default function App() {
   const [recapScript, setRecapScript] = useState('');
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedVoice, setSelectedVoice] = useState('Charon');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -106,7 +107,7 @@ export default function App() {
     setError(null);
 
     try {
-      const url = await generateAudio(recapScript);
+      const url = await generateAudio(recapScript, selectedVoice);
       if (url) {
         setAudioUrl(url);
       } else {
@@ -296,6 +297,28 @@ export default function App() {
                     <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400">Step 3: Audio Generation</h2>
                     
                     <div className="bg-orange-50 border border-orange-100 rounded-3xl p-8 flex flex-col items-center gap-6">
+                        {/* Voice Selector */}
+                        <div className="w-full flex items-center gap-3">
+                          <label className="text-sm font-medium text-gray-600 whitespace-nowrap">အသံရွေးချယ်:</label>
+                          <select
+                            value={selectedVoice}
+                            onChange={(e) => setSelectedVoice(e.target.value)}
+                            className="flex-1 p-2 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-orange-400"
+                          >
+                            <optgroup label="ယောက်ျားလေးအသံ">
+                              <option value="Charon">Charon (ဇာတ်လမ်းပြောင်း)</option>
+                              <option value="Fenrir">Fenrir (ကြမ်းတမ်းသော)</option>
+                              <option value="Orus">Orus (နက်သော)</option>
+                              <option value="Puck">Puck (လန်းဆန်းသော)</option>
+                            </optgroup>
+                            <optgroup label="မိန်းကလေးအသံ">
+                              <option value="Kore">Kore (ဇာတ်လမ်းပြောင်း)</option>
+                              <option value="Aoede">Aoede (နူးညံ့သော)</option>
+                              <option value="Leda">Leda (ရှင်းလင်းသော)</option>
+                              <option value="Zephyr">Zephyr (သာယာသော)</option>
+                            </optgroup>
+                          </select>
+                        </div>
                       {!audioUrl ? (
                         <button
                           onClick={handleGenerateAudio}
