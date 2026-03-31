@@ -4,7 +4,7 @@ import { GoogleGenAI, Modality, GenerateContentResponse } from "@google/genai";
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
 export const generateRecapScript = async (transcript: string, videoBase64?: string, videoMimeType?: string, videoUrl?: string) => {
-  const model = "gemini-3-flash-preview";
+  const model = "gemini-2.5-flash-preview";
   
   const systemInstruction = `You are a professional Burmese movie recap creator. 
   Your task is to rewrite the provided transcript (and optionally consider the video content or URL) into an engaging, exciting, and storytelling movie recap script in Burmese (Myanmar language).
